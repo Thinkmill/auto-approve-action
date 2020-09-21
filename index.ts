@@ -46,8 +46,6 @@ async function getLastReviewFromActionsBot() {
 }
 
 (async () => {
-  const pull_number = 1;
-
   const lastReviewFromActionsBot = await getLastReviewFromActionsBot();
   if (approved) {
     if (

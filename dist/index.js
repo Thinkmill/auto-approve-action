@@ -5878,12 +5878,10 @@ function getLastReviewFromActionsBot() {
     });
 }
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var pull_number, lastReviewFromActionsBot;
+    var lastReviewFromActionsBot;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                pull_number = 1;
-                return [4 /*yield*/, getLastReviewFromActionsBot()];
+            case 0: return [4 /*yield*/, getLastReviewFromActionsBot()];
             case 1:
                 lastReviewFromActionsBot = _a.sent();
                 if (!approved) return [3 /*break*/, 5];
