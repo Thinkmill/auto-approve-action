@@ -7,6 +7,7 @@ jobs:
   jest:
     name: Test
     runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.head.repo.full_name == 'Thinkmill/auto-approve-action' }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
