@@ -13,6 +13,7 @@ if (pull_number === undefined) {
   core.setFailed("This action must only be run on pull_request events");
   process.exit(1);
 }
+
 const octokit = github.getOctokit(githubToken);
 const approvedString = core.getInput("approve", { required: true });
 const approved =
@@ -28,6 +29,8 @@ const approved =
         );
         process.exit(1);
       })();
+
+console.log({ approved, pull_number });
 
 async function getLastReviewFromActionsBot() {
   const reviews = await octokit.pulls.listReviews({
@@ -51,20 +54,32 @@ async function getLastReviewFromActionsBot() {
       lastReviewFromActionsBot?.state === "DISMISSED" ||
       lastReviewFromActionsBot === undefined
     ) {
+      console.log("Approving PR");
       await octokit.pulls.createReview({
         ...github.context.repo,
         event: "APPROVE",
         pull_number,
       });
+    } else {
+      console.log("PR already approved so skipping approval");
     }
-  } else if (lastReviewFromActionsBot?.state === "APPROVED") {
-    await octokit.pulls.dismissReview({
-      ...github.context.repo,
-      pull_number,
-      message:
-        "The condition that caused this PR to be approved automatically changed to false, a person must approve this now.",
-      review_id: lastReviewFromActionsBot.id,
-    });
+  } else {
+    if (lastReviewFromActionsBot?.state === "APPROVED") {
+      console.log(
+        "approved is false and the action has approved this PR so dismissing review."
+      );
+      await octokit.pulls.dismissReview({
+        ...github.context.repo,
+        pull_number,
+        message:
+          "The condition that caused this PR to be approved automatically changed to false, a person must approve this now.",
+        review_id: lastReviewFromActionsBot.id,
+      });
+    } else {
+      console.log(
+        "approved is false and the action has not approved this PR so doing nothing."
+      );
+    }
   }
 })().catch((err) => {
   console.error(err);

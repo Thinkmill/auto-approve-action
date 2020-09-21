@@ -5857,6 +5857,7 @@ var approved = approvedString === "true"
             core.setFailed("The \"approve\" argument must be either \"true\" or \"false\" but was " + JSON.stringify(approvedString));
             process.exit(1);
         })();
+console.log({ approved: approved, pull_number: pull_number });
 function getLastReviewFromActionsBot() {
     return __awaiter(this, void 0, void 0, function () {
         var reviews, _i, _a, review;
@@ -5885,21 +5886,29 @@ function getLastReviewFromActionsBot() {
                 return [4 /*yield*/, getLastReviewFromActionsBot()];
             case 1:
                 lastReviewFromActionsBot = _a.sent();
-                if (!approved) return [3 /*break*/, 4];
+                if (!approved) return [3 /*break*/, 5];
                 if (!((lastReviewFromActionsBot === null || lastReviewFromActionsBot === void 0 ? void 0 : lastReviewFromActionsBot.state) === "DISMISSED" ||
                     lastReviewFromActionsBot === undefined)) return [3 /*break*/, 3];
+                console.log("Approving PR");
                 return [4 /*yield*/, octokit.pulls.createReview(__assign(__assign({}, github.context.repo), { event: "APPROVE", pull_number: pull_number }))];
             case 2:
                 _a.sent();
-                _a.label = 3;
-            case 3: return [3 /*break*/, 6];
-            case 4:
-                if (!((lastReviewFromActionsBot === null || lastReviewFromActionsBot === void 0 ? void 0 : lastReviewFromActionsBot.state) === "APPROVED")) return [3 /*break*/, 6];
-                return [4 /*yield*/, octokit.pulls.dismissReview(__assign(__assign({}, github.context.repo), { pull_number: pull_number, message: "The condition that caused this PR to be approved automatically changed to false, a person must approve this now.", review_id: lastReviewFromActionsBot.id }))];
+                return [3 /*break*/, 4];
+            case 3:
+                console.log("PR already approved so skipping approval");
+                _a.label = 4;
+            case 4: return [3 /*break*/, 8];
             case 5:
+                if (!((lastReviewFromActionsBot === null || lastReviewFromActionsBot === void 0 ? void 0 : lastReviewFromActionsBot.state) === "APPROVED")) return [3 /*break*/, 7];
+                console.log("approved is false and the action has approved this PR so dismissing review.");
+                return [4 /*yield*/, octokit.pulls.dismissReview(__assign(__assign({}, github.context.repo), { pull_number: pull_number, message: "The condition that caused this PR to be approved automatically changed to false, a person must approve this now.", review_id: lastReviewFromActionsBot.id }))];
+            case 6:
                 _a.sent();
-                _a.label = 6;
-            case 6: return [2 /*return*/];
+                return [3 /*break*/, 8];
+            case 7:
+                console.log("approved is false and the action has not approved this PR so doing nothing.");
+                _a.label = 8;
+            case 8: return [2 /*return*/];
         }
     });
 }); })().catch(function (err) {
