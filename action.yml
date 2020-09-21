@@ -1,0 +1,12 @@
+name: Auto Approve
+description: A GitHub action to automatically approve(and dismiss the approval) PRs based on a condition
+runs:
+  using: "node12"
+  main: "dist/index.js"
+inputs:
+  approved:
+    description: "Whether to approve the PR or not"
+    required: false
+branding:
+  icon: "package"
+  color: "blue"

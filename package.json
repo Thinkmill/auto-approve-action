@@ -1,0 +1,18 @@
+{
+  "name": "auto-approve-action",
+  "private": true,
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "ncc build ./index.ts"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.5",
+    "@actions/exec": "^1.0.4",
+    "@actions/github": "^4.0.0",
+    "@types/node": "^12.7.1",
+    "@vercel/ncc": "^0.24.1",
+    "typescript": "^4.0.3"
+  }
+}
