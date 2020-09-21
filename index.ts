@@ -62,7 +62,7 @@ async function getLastReviewFromActionsBot() {
       ...github.context.repo,
       pull_number,
       message:
-        "The condition that made this PR approved changed to false, a person must approve this now.",
+        "The condition that caused this PR to be approved automatically changed to false, a person must approve this now.",
       review_id: lastReviewFromActionsBot.id,
     });
   }

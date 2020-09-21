@@ -5895,7 +5895,7 @@ function getLastReviewFromActionsBot() {
             case 3: return [3 /*break*/, 6];
             case 4:
                 if (!((lastReviewFromActionsBot === null || lastReviewFromActionsBot === void 0 ? void 0 : lastReviewFromActionsBot.state) === "APPROVED")) return [3 /*break*/, 6];
-                return [4 /*yield*/, octokit.pulls.dismissReview(__assign(__assign({}, github.context.repo), { pull_number: pull_number, message: "The condition that made this PR approved changed to false, a person must approve this now.", review_id: lastReviewFromActionsBot.id }))];
+                return [4 /*yield*/, octokit.pulls.dismissReview(__assign(__assign({}, github.context.repo), { pull_number: pull_number, message: "The condition that caused this PR to be approved automatically changed to false, a person must approve this now.", review_id: lastReviewFromActionsBot.id }))];
             case 5:
                 _a.sent();
                 _a.label = 6;
