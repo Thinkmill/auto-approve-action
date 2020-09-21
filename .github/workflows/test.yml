@@ -18,4 +18,4 @@ jobs:
               - '!test.md'
       - uses: ./
         with:
-          approve: steps.filter.outputs.shouldRequireApprovalFromPerson == 'false'
+          approve: ${{ steps.filter.outputs.shouldRequireApprovalFromPerson == 'false' }}
