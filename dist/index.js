@@ -5892,13 +5892,14 @@ function getLastReviewFromActionsBot() {
             case 2:
                 _a.sent();
                 _a.label = 3;
-            case 3: return [3 /*break*/, 5];
+            case 3: return [3 /*break*/, 6];
             case 4:
-                if ((lastReviewFromActionsBot === null || lastReviewFromActionsBot === void 0 ? void 0 : lastReviewFromActionsBot.state) === "APPROVED") {
-                    octokit.pulls.dismissReview(__assign(__assign({}, github.context.repo), { pull_number: pull_number, message: "The condition that made this PR approved changed to false, a person must approve this now.", review_id: 2 }));
-                }
-                _a.label = 5;
-            case 5: return [2 /*return*/];
+                if (!((lastReviewFromActionsBot === null || lastReviewFromActionsBot === void 0 ? void 0 : lastReviewFromActionsBot.state) === "APPROVED")) return [3 /*break*/, 6];
+                return [4 /*yield*/, octokit.pulls.dismissReview(__assign(__assign({}, github.context.repo), { pull_number: pull_number, message: "The condition that made this PR approved changed to false, a person must approve this now.", review_id: lastReviewFromActionsBot.id }))];
+            case 5:
+                _a.sent();
+                _a.label = 6;
+            case 6: return [2 /*return*/];
         }
     });
 }); })().catch(function (err) {
