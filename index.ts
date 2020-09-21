@@ -14,7 +14,7 @@ if (pull_number === undefined) {
   process.exit(1);
 }
 const octokit = github.getOctokit(githubToken);
-const approvedString = core.getInput("approved", { required: true });
+const approvedString = core.getInput("approve", { required: true });
 const approved =
   approvedString === "true"
     ? true
@@ -22,7 +22,7 @@ const approved =
     ? false
     : (() => {
         core.setFailed(
-          `The "approved" argument must be either "true" or "false" but was ${JSON.stringify(
+          `The "approve" argument must be either "true" or "false" but was ${JSON.stringify(
             approvedString
           )}`
         );

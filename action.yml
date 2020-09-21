@@ -4,9 +4,9 @@ runs:
   using: "node12"
   main: "dist/index.js"
 inputs:
-  approved:
+  approve:
     description: "Whether to approve the PR or not"
-    required: false
+    required: true
 branding:
-  icon: "package"
-  color: "blue"
+  icon: "git-pull-request"
+  color: "green"
