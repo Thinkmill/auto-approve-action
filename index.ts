@@ -58,12 +58,12 @@ async function getLastReviewFromActionsBot() {
       });
     }
   } else if (lastReviewFromActionsBot?.state === "APPROVED") {
-    octokit.pulls.dismissReview({
+    await octokit.pulls.dismissReview({
       ...github.context.repo,
       pull_number,
       message:
         "The condition that made this PR approved changed to false, a person must approve this now.",
-      review_id: 2,
+      review_id: lastReviewFromActionsBot.id,
     });
   }
 })().catch((err) => {
